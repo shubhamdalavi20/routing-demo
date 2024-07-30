@@ -1,23 +1,26 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+} from '@angular/forms';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent {
-  loginForm: FormGroup = new FormGroup({
-    username: new FormControl(''),
-    password: new FormControl(''),
-  });
+  public loginForm: FormGroup;
 
-  submit() {
-    if (this.loginForm.valid) {
-      this.submitEM.emit(this.loginForm.value);
-    }
+  constructor(private formBuilder: FormBuilder) {
+    this.loginForm = this.formBuilder.group({
+      userName: new FormControl(''),
+      password: new FormControl(''),
+    });
   }
-  @Input() error: string | null = null;
 
-  @Output() submitEM = new EventEmitter();
+  showData() {
+    console.log(this.loginForm.value)
+  }
 }
